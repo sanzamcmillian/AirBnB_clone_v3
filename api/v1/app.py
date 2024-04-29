@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ A Flask API """
-import flask from Flask
+from flask import Flask
 from flask_cors import CORS
 from os import getenv
 from models import storage
