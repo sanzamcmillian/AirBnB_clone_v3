@@ -4,6 +4,7 @@ Contains the FileStorage class
 """
 
 import json
+import models
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -11,6 +12,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from hashlib import md5
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -47,11 +49,14 @@ class FileStorage:
             cls: class
             return: object or None
         """
-        all_class = self.all(cls)
+        if cls not in classes.values():
+            return None
         
-        for obj in all_class.values():
-            if id == str(obj.id):
-                return obj
+        all_cls = models.storage.all(cls)
+        for value in all_cls.values():
+            if (value.id == id):
+                return value
+        
         return None
     
     def count(self, cls=None):
@@ -61,7 +66,16 @@ class FileStorage:
             cls (_type_, optional): class. Defaults to None.
             return: number of instances
         """
-        return len(self.all(cls))
+        all_class = classes.values()
+        
+        if not cls:
+            count = 0
+            for clas in all_class:
+                count += len(models.storage.all(clas).values())
+        else:
+            count = len(models.storage.all(cls).values())
+            
+        return count
     
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""

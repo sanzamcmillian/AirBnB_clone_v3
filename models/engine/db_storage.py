@@ -62,12 +62,13 @@ class DBStorage:
             id (_type_): id of object as string
             return: found object or none
         """
-        all_class = self.all(cls)
+        if cls not in classes.values():
+            return None
         
-        for obj in all_class.values():
-            if id == str(obj.id):
-                return obj
-        return None
+        all_cls = models.storage.all(cls)
+        for value in all_cls.values():
+            if (value.id == id):
+                return value
     
     def count(self, cls=None):
         """Count of how many instances of a class
@@ -76,7 +77,16 @@ class DBStorage:
             cls (_type_, optional): class name. Defaults to None.
             return: count od instances of a class
         """
-        return len(self.all(cls))
+        all_class = classes.values()
+        
+        if not cls:
+            count = 0
+            for clas in all_class:
+                count += lent(models.storage.all(cls).values())
+        else:
+            count = len(models.storage.all(cls).values())
+
+        return count
     
     def save(self):
         """commit all changes of the current database session"""
