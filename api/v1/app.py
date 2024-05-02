@@ -17,7 +17,8 @@ cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 @app.teardown_appcontext
 def teardown(error):
     """ Method to handle teardown_appcontext """
-    storage.close() 
+    storage.close()
+
 
 @app.errorhandler(404)
 def handle_404(error):
@@ -27,6 +28,7 @@ def handle_404(error):
         error (_type_): param.
         return: returns 404 json
     """
+<<<<<<< HEAD
     return make_response(jsonify({'error': "Not found"}), 404)
 
 app.config['SWAGGER'] = {
@@ -35,6 +37,17 @@ app.config['SWAGGER'] = {
 }
 
 Swagger(app)
+=======
+    data = {
+        "error": "Not found"
+    }
+
+    resp = jsonify(data)
+    resp.status_code = 404
+
+    return(resp)
+>>>>>>> 65da55f03c8e31fd1e3041954521457ea43506df
+
 
 if __name__ == "__main__":
     """Main Function"""

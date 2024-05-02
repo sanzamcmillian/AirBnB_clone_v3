@@ -70,7 +70,6 @@ test_db_storage.py'])
 
 class TestDBStorage(unittest.TestCase):
     """Test the FileStorage class"""
-
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
@@ -101,8 +100,8 @@ class TestDBStorage(unittest.TestCase):
 
         returned_state = session.query(State).filter_by(id=new_state).first()
 
-        self.assertEquals(returned_state.id, new_state.id)
-        self.assertEqual(sreturned_state.name, new_state.name)
+        self.assertEqual(returned_state.id, new_state.id)
+        self.assertEqual(returned_state.name, new_state.name)
         self.assertIsNone(returned_state)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
@@ -118,8 +117,8 @@ class TestDBStorage(unittest.TestCase):
 
         returned_state = session.query(State).filter_by(id=new_state).first()
 
-        self.assertEquals(returned_state.id, new_state.id))
-        self.assertEquals(returned_state.name, new_state.name)
+        self.assertEqual(returned_state.id, new_state.id))
+        self.assertEqual(returned_state.name, new_state.name)
         self.assertIsNone(returned_state)
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
@@ -135,16 +134,15 @@ class TestDBStorage(unittest.TestCase):
 
         returned_state = storage.get(State, state_instance.id)
 
-        self.assertEquals(state_instance, returned_state)
+        self.assertEqual(state_instance, returned_state)
 
         null_state_id = storage.get(State, 'null_id')
 
-        self.assertEquals(null_state_id, None)
+        self.assertEqual(null_state_id, None)
 
-   @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-   def test_count(self):
-       """ Test for getting an instance of db storage """
-
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """ Test for getting an instance of db storage """
         storage = models.storage
         storage.reload()
 
@@ -161,7 +159,7 @@ class TestDBStorage(unittest.TestCase):
         storage.save()
 
         state_count = storage.count(State)
-        self.assertEquals(state_count, len(storage.all(State)))
+        self.assertEqual(state_count, len(storage.all(State)))
 
         all_state_count = storage.count()
-        self.assertEquals(all_state_count, len(storage.all()))
+        self.assertEqual(all_state_count, len(storage.all()))
