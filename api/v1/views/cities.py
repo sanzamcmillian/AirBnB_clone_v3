@@ -9,7 +9,8 @@ from models.city import City
 from flasgger.utils import swag_from
 
 
-@app_views.route("/states/<state_id>/cities", methods=["GET"], strict_slashes=False)
+@app_views.route("/states/<state_id>/cities", methods=["GET"],
+                 strict_slashes=False)
 @swag_from('documentation/city/cities_by_state.yml', methods=['GET'])
 def city_by_state(state_id):
     """retrieves alll city objects from a specific state
@@ -20,13 +21,12 @@ def city_by_state(state_id):
     """
     city_list = []
     state_obj = storage.get(State, state_id)
-    
-    
+
     if not state_obj:
         abort(404)
     for obj in state_obj.cities:
         city_list.append(obj.to_dict())
-        
+
     return jsonify(city_list)
 
 
@@ -40,9 +40,9 @@ def city_by_id(city_id):
         return: city obj with the specified id or error
     """
     fetched_obj = storage.get(City, city_id)
-    
+
     if not fetched_obj:
-        abort(404)    
+        abort(404)
     return jsonify(fetched_obj.to_dict())
 
 
@@ -58,20 +58,20 @@ def city_put(city_id):
     city = storage.get(City, city_id)
     if not city:
         abort(404)
-    
+
     if not request.get_json():
         abort(400, description="Not a JSON")
-        
+
     ignore = ['id', 'state_id', 'created_at', 'updated_at']
-    
+
     data = request.get_json()
     for key, value in data.items():
         if key not in ignore:
             setattr(city, key, value)
     storage.save()
     return make_response(jsonify(city.to_dict()), 200)
-    
-    
+
+
 @app_views.route("/cities/<city_id>", methods=["DELETE"], strict_slashes=False)
 @swag_from('documentation/city/delete_city.yml', methods=['DELETE'])
 def city_delete_by_id(city_id):
@@ -82,12 +82,12 @@ def city_delete_by_id(city_id):
        return:: empty dict with 200 or 404 if not found
     """
     fetched_obj = storage.get(City, city_id)
-        
+
     if not fetched_obj:
-        abort(404)        
+        abort(404)
     storage.delete(fetched_obj)
     storage.save()
-        
+
     return make_response(jsonify({}), 200)
 
 
@@ -102,12 +102,12 @@ def put_city(city_id):
     city = storage.get(City, city_id)
     if not city:
         abort(404)
-    
+
     if not request.get_json():
         abort(400, description="Not a JSON")
-    
+
     ignore = ['id', 'state_id', 'created_at', 'updated_at']
-    
+
     data = request.get_json()
     for key, value in data.items():
         if key not in ignore:
