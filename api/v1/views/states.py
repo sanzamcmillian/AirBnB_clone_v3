@@ -9,6 +9,7 @@ from models.state import State
 
 
 @app_views.route("/states", methods=["GET"], strict_slashes=False)
+@swag_from('documentation/state/get_state.yml', methods=False)
 def state_get_all():
     """retrieves all state objects
        return: json of all states
