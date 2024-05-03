@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ holds class User"""
+from typing import Any
 import models
 from models.base_model import BaseModel, Base
 from os import getenv
@@ -27,3 +28,17 @@ class User(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """initializes user"""
         super().__init__(*args, **kwargs)
+
+    def __setattr__(self, name, value):
+        """sets a password with md5 encryption
+
+        Args:
+            name (_type_): _description_
+            value (_type_): _description_
+
+        Returns:
+            _type_: void
+        """
+        if name == "password":
+            value = md5(value.encode()).hexdigest()
+        super().__setattr__(name, value)
