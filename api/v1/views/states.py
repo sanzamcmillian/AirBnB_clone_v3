@@ -63,7 +63,7 @@ def state_put(state_id):
     return make_response(jsonify(state.to_dict()), 200)
 
 
-@app_views.route("/states/<state_id>", methods=["DELETE"], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
 @swag_from('documentation/state/post_state.yml', methods=['POST'])
 def state_delete_by_id(state_id):
     """deletes State by id
@@ -72,7 +72,6 @@ def state_delete_by_id(state_id):
         state_id (_type_): state object id
         return: empty dict with 200 or 404 if not found
     """
-    
     fetched_obj = storage.get(State, state_id)
     
     if not fetched_obj:
