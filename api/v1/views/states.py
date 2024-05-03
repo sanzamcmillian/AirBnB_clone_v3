@@ -58,7 +58,7 @@ def state_put(state_id):
     data = request.get_json()
     for key, value in data.items():
         if key not in ignore:
-            setattr(State, key, value)
+            setattr(state, key, value)
     storage.save()
     return make_response(jsonify(state.to_dict()), 200)
 
