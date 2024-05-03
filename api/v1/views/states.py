@@ -52,7 +52,7 @@ def state_put(state_id):
         abort(404)
     if not request.get_json():
         abort(400, description="Not a JSON")
-    
+
     ignore = ['id', 'created_at', 'updated_at']
 
     data = request.get_json()
@@ -77,7 +77,7 @@ def state_delete_by_id(state_id):
 
     if not fetched_obj:
         abort(404)
-    
+
     storage.delete(fetched_obj)
     storage.save()
 
