@@ -141,9 +141,9 @@ class TestDBStorage(unittest.TestCase):
 
         self.assertEquals(null_state_id, None)
 
-   @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-   def test_count(self):
-       """ Test for getting an instance of db storage """
+   #@unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_count(self):
+        """ Test for getting an instance of db storage """
 
         storage = models.storage
         storage.reload()
@@ -164,4 +164,4 @@ class TestDBStorage(unittest.TestCase):
         self.assertEquals(state_count, len(storage.all(State)))
 
         all_state_count = storage.count()
-        self.assertEquals(all_state_count, len(storage.all()))
+        self.assertEquals(all_state_count, len(storage.all()), all_state_count)
