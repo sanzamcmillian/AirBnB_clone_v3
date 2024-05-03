@@ -17,7 +17,7 @@ def state_get_all():
     state_list = []
     state_obj = storage.all(State).values()
     for state in state_obj:
-        state_list.append(state.to_dict())    
+        state_list.append(state.to_dict())
     return jsonify(state_list)
 
 
@@ -31,9 +31,9 @@ def state_by_id(state_id):
         return: state obj with the specified id or erro
     """
     fetched_obj = storage.get(State, state_id)
-    
+
     if not fetched_obj:
-        abort(404)    
+        abort(404)
     return jsonify(fetched_obj.to_dict())
 
 
@@ -47,14 +47,14 @@ def state_put(state_id):
         return: state object and 200 on success, or 400,404 on failure
     """
     state = storage.get(State, state_id)
-    
+
     if not state:
         abort(404)
     if not request.get_json():
         abort(400, description="Not a JSON")
-        
-    ignore = ['id', 'created_at', 'updated_at']
     
+    ignore = ['id', 'created_at', 'updated_at']
+
     data = request.get_json()
     for key, value in data.items():
         if key not in ignore:
@@ -63,7 +63,8 @@ def state_put(state_id):
     return make_response(jsonify(state.to_dict()), 200)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 @swag_from('documentation/state/post_state.yml', methods=['POST'])
 def state_delete_by_id(state_id):
     """deletes State by id
@@ -73,13 +74,13 @@ def state_delete_by_id(state_id):
         return: empty dict with 200 or 404 if not found
     """
     fetched_obj = storage.get(State, state_id)
-    
+
     if not fetched_obj:
         abort(404)
-        
+    
     storage.delete(fetched_obj)
     storage.save()
-    
+
     return make_response(jsonify({}), 200)
 
 
@@ -92,7 +93,7 @@ def post_state():
         abort(400, description="Not a JSON")
     if 'name' not in request.get_json():
         abort(400, description="Missing name")
-        
+
     data = request.get_json()
     instance = State(**data)
     instance.save()
