@@ -21,7 +21,7 @@ def state_get_all():
     return jsonify(state_list)
 
 
-@app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/states/<uuid:state_id>', methods=['GET'], strict_slashes=False)
 @swag_from('documentation/state/get_id_state.yml', methods=['get'])
 def state_by_id(state_id):
     """gets a specific state object by ID
@@ -37,7 +37,7 @@ def state_by_id(state_id):
     return jsonify(fetched_obj.to_dict())
 
 
-@app_views.route("/states/<state_id>", methods=['PUT'], strict_slashes=False)
+@app_views.route("/states/<uuid:state_id>", methods=['PUT'], strict_slashes=False)
 @swag_from('documentation/state/put_state.yml', methods=['PUT'])
 def state_put(state_id):
     """updates specific state object ID
@@ -63,7 +63,7 @@ def state_put(state_id):
     return make_response(jsonify(state.to_dict()), 200)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'],
+@app_views.route('/states/<uuid:state_id>', methods=['DELETE'],
                  strict_slashes=False)
 @swag_from('documentation/state/post_state.yml', methods=['POST'])
 def state_delete_by_id(state_id):
