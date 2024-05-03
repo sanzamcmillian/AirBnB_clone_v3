@@ -46,7 +46,7 @@ def city_by_id(city_id):
     return jsonify(fetched_obj.to_dict())
 
 
-@app_views.route("cities/<ccity_id>", methods=["PUT"], strict_slashes=False)
+@app_views.route("cities/<city_id>", methods=["PUT"], strict_slashes=False)
 @swag_from('documentation/city/put_city.yml', methods=['PUT'])
 def city_put(city_id):
     """updates specific city object by ID
