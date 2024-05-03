@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""index doc"""
 from flask import jsonify
 from models import storage
 from models.state import State
