@@ -8,7 +8,7 @@ from api.v1.views import app_views
 from models.state import State
 
 
-@app_views.route("/states", methods=["GET"], strict_slashes=False)
+@app_views.route("/states", methods=['GET'], strict_slashes=False)
 @swag_from('documentation/state/get_state.yml', methods=False)
 def state_get_all():
     """retrieves all state objects
@@ -22,7 +22,7 @@ def state_get_all():
     return jsonify(state_list)
 
 
-@app_views.route("/states/<state_id>", methods=["GET"], strict_slashes=False)
+@app_views.route("/states/<state_id>", methods=['GET'], strict_slashes=False)
 @swag_from('documentation/state/get_id_state.yml', methods=['get'])
 def state_by_id(state_id):
     """gets a specific state object by ID
@@ -40,7 +40,7 @@ def state_by_id(state_id):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route("/states/<state_id>", methods=["PUT"], strict_slashes=False)
+@app_views.route("/states/<state_id>", methods=['PUT'], strict_slashes=False)
 @swag_from('documentation/state/put_state.yml', methods=['PUT'])
 def state_put(state_id):
     """updates specific state object ID
