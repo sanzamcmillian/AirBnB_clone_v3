@@ -10,7 +10,6 @@ import sqlalchemy
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 import uuid
-from hashlib import md5
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
@@ -69,18 +68,12 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
-        if save_fs is None or save_fs:
+        if save_fs is None:
             if "password" in new_dict:
                 del new_dict["password"]
-        else:
-            if "password" in new_dict:
-                new_dict["password"] = self.hash_password(new_dict["password"])
         return new_dict
 
     def delete(self):
         """delete the current instance from the storage"""
         models.storage.delete(self)
 
-    def hash_password(self, password):
-        """Hashes the password using MD5."""
-        return md5(password.encode()).hexdigest()
